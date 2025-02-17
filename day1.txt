@@ -35,3 +35,23 @@ for num in user_nubers:
         print(f"{num} is an even number")
     else:
         print(f"{num} is an ODD number")
+
+
+-------
+
+
+
+
+class User:
+    name='super-admin'
+
+# constructor
+    def __init__(self,age,city):
+        self.age=age
+        self.city=city
+
+user= User(31,'mumbai')
+
+print(f"user details {user.age} {user.city}")
+
+
