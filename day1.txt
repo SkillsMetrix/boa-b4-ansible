@@ -1,37 +1,41 @@
+
+def add(a,b):
+    return a+b
+def sub(a,b):
+    return b-a
+def multi(a,b):
+    return a*b
+def dicide(a,b):
+    return a/b
+
+------
+
+
+
+
+
 from abc import ABC,abstractmethod
-class Employee(ABC):
-
-    def __init__(self,name,empid,position):
-        self.name=name
-        self.empid=empid
-        self.position=position
+import math_operations
+#from math_operations import add,dicide,multi,sub
+class Calculator(ABC):
     @abstractmethod
-    def calculateSalary(self):
+    def add(self,a,b):
         pass
+  
+class BasicCalc(Calculator):
+ 
+    def add(self,a,b):
+        return math_operations.add(a,b)
 
-class FullTimeEmployee(Employee):
-     def __init__(self,name,empid,position,salary):
-        super().__init__(name,empid,position)
-        self.salary=salary
-     def calculateSalary(self):
-         return self.salary
-        
 
-class PartTimeEmployee(Employee):
-     def __init__(self,name,empid,position,hourlyRates,hoursOfWork):
-        super().__init__(name,empid,position)
-        self.hourlyRates=hourlyRates
-        self.hoursOfWork=hoursOfWork
-     def calculateSalary(self):
-         return self.hourlyRates*self.hoursOfWork
-     
-
-fte= FullTimeEmployee("Alice",101,"SE",5000)
-pte= PartTimeEmployee("Bob",102,"QA",25,20)
-
-print(f"{fte.name}'s Salary ${fte.calculateSalary()}")
-print(f"{pte.name}'s Salary ${pte.calculateSalary()}")
+-----
 
 
 
-        
+
+
+
+from calculator import BasicCalc
+
+calc= BasicCalc()
+print(calc.add(12,13))
