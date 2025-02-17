@@ -1,70 +1,37 @@
- 
+from abc import ABC,abstractmethod
+class Employee(ABC):
 
-projectTypes=['HRMS','IT','Banking','Finance']
-
-dummy=[]
-
-for project in projectTypes:
-    if project =='Banking':
-        continue
-    else:
-        print(f"Developing Project {project}")
-dummy.append('Banking')
-print(f"Developed {dummy}")
-
-
-------
-
-
-
-# initialize empty array
-user_nubers=[]
-# ask the user to share the data
-
-n=int(input("Home many numbers yo wana add....! :"))
-# take this into an array
-
-for i in range(n):
-    num=int(input(f"Enter numbers {i+1}"))
-    user_nubers.append(num)
-
-#loop through the array
-
-for num in user_nubers:
-    if num% 2==0:
-        print(f"{num} is an even number")
-    else:
-        print(f"{num} is an ODD number")
-
-
--------
-
-
-
-
-class User:
-    name='super-admin'
-
-# constructor
-    def __init__(self,age,city):
-        self.age=age
-        self.city=city
-
-user= User(31,'mumbai')
-
-print(f"user details {user.age} {user.city}")
-
-----
-
-
-
-class Student:
-    def __init__(self,rollno,name,subject,marks):
+    def __init__(self,name,empid,position):
         self.name=name
-        self.rollno=rollno
-        self.subject=subject
-        self.marks=marks
-    def displayData(self):
-        print (f"Student Data is here:  {self.name} {self.rollno} {self.subject} {self.marks}")
-stu=Student("199","stu1","phy",30)
-stu.displayData()
+        self.empid=empid
+        self.position=position
+    @abstractmethod
+    def calculateSalary(self):
+        pass
+
+class FullTimeEmployee(Employee):
+     def __init__(self,name,empid,position,salary):
+        super().__init__(name,empid,position)
+        self.salary=salary
+     def calculateSalary(self):
+         return self.salary
+        
+
+class PartTimeEmployee(Employee):
+     def __init__(self,name,empid,position,hourlyRates,hoursOfWork):
+        super().__init__(name,empid,position)
+        self.hourlyRates=hourlyRates
+        self.hoursOfWork=hoursOfWork
+     def calculateSalary(self):
+         return self.hourlyRates*self.hoursOfWork
+     
+
+fte= FullTimeEmployee("Alice",101,"SE",5000)
+pte= PartTimeEmployee("Bob",102,"QA",25,20)
+
+print(f"{fte.name}'s Salary ${fte.calculateSalary()}")
+print(f"{pte.name}'s Salary ${pte.calculateSalary()}")
+
+
+
+        
