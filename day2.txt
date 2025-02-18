@@ -1,5 +1,5 @@
-from fastapi import FastAPI ,status
-from fastapi.params import Body
+from fastapi import FastAPI ,status,HTTPException
+ 
 from random import randrange
 from pydantic import BaseModel
 
@@ -14,7 +14,7 @@ my_posts=[{"title":"welcome Title","content":"Demo Content","id":1}]
 def findPost(id):
     for i,p in enumerate(my_posts):
         if(p['id']== id):
-            return p
+            return i
 
 # load all the data
 @app.get('/loadusers')
@@ -25,8 +25,21 @@ def loadUsers():
 @app.get('/loaduser/{id}')
 def loadUser(id:int):
     foundData=findPost(id)
-    return {'data':foundData}
+    if not foundData:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail='OOPS....Given Id not found')
+    else:
+        return {'data':foundData}
 
+# delete specific data
+@app.delete('/deleteuser/{id}')
+def deleteUser(id:int):
+    foundData=findPost(id)
+    print(foundData)
+    if not foundData:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail='OOPS....Given Id not found')
+    else:
+        my_posts.pop(foundData)
+        return {'data':'user deleted'}
 
 
 # add the new data
