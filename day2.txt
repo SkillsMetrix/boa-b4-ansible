@@ -52,3 +52,18 @@ def register(payload: UserPost):
     # update the array with new data
     my_posts.append(userdata)
     return {'message':userdata}
+
+# update specific data
+@app.put('/updateuser/{id}')
+def updateUser(id:int,payload:UserPost):
+    foundData=findPost(id)
+   
+    if not foundData:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail='OOPS....Given Id not found')
+    else:
+        userdata=payload.model_dump()
+        # checking the ID what user has passed with existing data
+        userdata['id']=id
+        # replacing that existing data with new data recieved from the client
+        my_posts[foundData]= userdata
+        return {'data':userdata}
