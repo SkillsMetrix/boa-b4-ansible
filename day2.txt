@@ -1,4 +1,4 @@
-from fastapi import FastAPI 
+from fastapi import FastAPI ,status
 from fastapi.params import Body
 from random import randrange
 from pydantic import BaseModel
@@ -10,14 +10,27 @@ app= FastAPI()
 # dummy data of array
 my_posts=[{"title":"welcome Title","content":"Demo Content","id":1}]
 
+# search user
+def findPost(id):
+    for i,p in enumerate(my_posts):
+        if(p['id']== id):
+            return p
 
-
+# load all the data
 @app.get('/loadusers')
-def login():
+def loadUsers():
     return {'message':my_posts}
 
+# get specific data
+@app.get('/loaduser/{id}')
+def loadUser(id:int):
+    foundData=findPost(id)
+    return {'data':foundData}
 
-@app.post('/registeruser')
+
+
+# add the new data
+@app.post('/registeruser',status_code=status.HTTP_201_CREATED)
 def register(payload: UserPost):
     #convert recieveing data into key:value pair
     userdata=payload.model_dump()
