@@ -1,8 +1,28 @@
 from fastapi import FastAPI 
+from fastapi.params import Body
+from random import randrange
+from pydantic import BaseModel
 
-
+class UserPost(BaseModel):
+    title: str
+    content: str
 app= FastAPI()
+# dummy data of array
+my_posts=[{"title":"welcome Title","content":"Demo Content","id":1}]
 
-@app.get('/welcome')
-def welcome():
-    return {'message':"welcome to FAST-API"}
+
+
+@app.get('/loadusers')
+def login():
+    return {'message':my_posts}
+
+
+@app.post('/registeruser')
+def register(payload: UserPost):
+    #convert recieveing data into key:value pair
+    userdata=payload.model_dump()
+    # update the id with rand range
+    userdata['id']=randrange(0,1000)
+    # update the array with new data
+    my_posts.append(userdata)
+    return {'message':userdata}
