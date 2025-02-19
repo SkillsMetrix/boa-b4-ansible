@@ -1,1 +1,1 @@
-https://github.com/SkillsMetrix/boa-ansible-b3/blob/main/app9-authJwt.zip
+ssh-copy-id -f "-o IdentityFile boa-fs-b4.pem" ubuntu@34.214.15.181
