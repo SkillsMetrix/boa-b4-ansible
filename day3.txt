@@ -1,1 +1,8 @@
-ssh-copy-id -f "-o IdentityFile boa-fs-b4.pem" ubuntu@34.214.15.181
+
+- hosts: web
+  become: true
+  tasks:
+    - name: create a dir for me in web instance
+      file:
+        path: ./basic-boa-app
+        state: directory
