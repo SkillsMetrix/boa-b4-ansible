@@ -1,0 +1,4 @@
+- name: set the message into the index page by reading from var
+  copy:
+    content: "{{message}}"
+    dest: /var/www/html/index.html
