@@ -1,27 +1,29 @@
-
-- name: install nginx
-  apt:
-    name: nginx
-    state: latest
-    update_cache: yes
-
-- name: copy index page
-  template: src=files/index.html dest=/usr/share/nginx/html/index.html
-- name: update index page
-  template: src=files/updated.html dest=/usr/share/nginx/html/index.html
-  notify: 
-    - Restart NgInx
-
-
--------
-
-- hosts: db
+- name: vardemo app
+  hosts: web
   become: true
-  roles:
-    - handlerdemo
-
-  handlers:
-    - name: Restart NgInx
-      service:
-        name: nginx
-        state: restarted
+  vars:
+    main_playbook_var: "demo vars"
+    is_enabled: true
+    #list vars
+    fruits:
+      - apple
+      - oranges
+      - banana
+    fruit_prices:
+      apple: 20
+      banana: 25
+      oranges: 50
+    fruit_basket:
+      - name: john
+        fruits:
+          - apple
+          - oranges
+      - name: jane
+        fruits:
+          - banana
+          - apple
+  tasks:
+      - name: print String variable
+        debug:
+          var: main_playbook_var
+  
