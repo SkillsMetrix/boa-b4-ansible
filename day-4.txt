@@ -22,8 +22,26 @@
         fruits:
           - banana
           - apple
+  
+  vars_files:
+    - external_data.yml
   tasks:
       - name: print String variable
         debug:
           var: main_playbook_var
+      - name: print boolean variable
+        debug:
+          var: is_enabled
+      - name: print list variable
+        debug:
+          var: fruits
+      - name: print prices variable
+        debug:
+          var: fruit_prices
+      - name: print position variable
+        debug:
+          var: fruits[1]
+      - name: print external variable
+        debug:
+          var: vars_external
   
