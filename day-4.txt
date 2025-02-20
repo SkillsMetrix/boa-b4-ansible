@@ -1,0 +1,27 @@
+
+- name: install nginx
+  apt:
+    name: nginx
+    state: latest
+    update_cache: yes
+
+- name: copy index page
+  template: src=files/index.html dest=/usr/share/nginx/html/index.html
+- name: update index page
+  template: src=files/updated.html dest=/usr/share/nginx/html/index.html
+  notify: 
+    - Restart NgInx
+
+
+-------
+
+- hosts: db
+  become: true
+  roles:
+    - handlerdemo
+
+  handlers:
+    - name: Restart NgInx
+      service:
+        name: nginx
+        state: restarted
