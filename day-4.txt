@@ -1,18 +1,10 @@
-- name: uninstall apache web server
-  apt:
-    name: apache2
-    state: absent
-  when: install_apache_flag
 
-- name: combine conditions
-  debug:
-    var: ansible_facts['kernel_version']
-  when:
-    - ansible_facts['os_family']=='Debian'
-    - ansible_facts['distribution_major_version'] =='24'
 
-- name: combine conditions OR
+- name: register a variable
+  command: cat /home/ubuntu/test-file.txt
+  register: file_data
+
+- name: use the variable in conditional statement
   debug:
-    var: ansible_facts['kernel_version']
-  when:
-    - ansible_facts['os_family']=='Debian' or ansible_facts['distribution_major_version'] | int >20
+    var: file_data.stdout
+  when: file_data.stdout.find('boa') != -1
