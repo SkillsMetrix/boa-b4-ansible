@@ -1,17 +1,14 @@
-- name: copy index file
-  template: src=files/inde.html dest=/home/ubuntu
-  register: copy_result
-  ignore_errors: true
-
-- name: print the data
-  debug:
-    var: copy_result
-
-- name: copy update file
-  template: src=files/update.html dest=/home/ubuntu
-  failed_when:
-    - '"Could not find or access" in copy_result.msg'
-    - copy_result.failed == true
-  any_errors_fatal: true
-
-
+ansible-playbook -i inventory.ini vault-playbook.yml
+ 1229  ansible-playbook -i inventory.ini vault-playbook.yml
+ 1230  clear
+ 1231  ansible-playbook -i ../inventory.ini vault-playbook.yml
+ 1232  clear
+ 1233  ansible-playbook -i ../inventory.ini vault-playbook.yml -e @group_vars/my_vault.yml --ask-vault-pass
+ 1234  ansible-vault rekey  group_vars/my_vault.yml
+ 1235  clear
+ 1236  openssl rand -base64 2048 > pass_file/ansible-vault.pass
+ 1237  ansible-vault create group_vars/my_vault_base64.yml --valut-password-file=pass_file/ansible-vault.pass
+ 1238  clear
+ 1239  ansible-vault create group_vars/my_vault_base64.yml --vault-password-file=pass_file/ansible-vault.pass
+ 1240  ansible-playbook -i ../inventory.ini vault-playbook.yml
+ 1241  ansible-playbook -i ../inventory.ini vault-playbook.yml -e @group_vars/my_vault_base64.yml --vault-password-file=pass_file/ansible-vault.pass
