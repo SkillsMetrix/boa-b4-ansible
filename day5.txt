@@ -50,3 +50,34 @@ server.modules += (
         "mod_dirlisting",
         "mod_staticfile",
 )
+
+
+
+
+
+-----
+
+
+
+- name: install lighttpd server
+  become: true
+  apt:
+    name: lighttpd
+    state: latest
+    update_cache: yes
+
+- name: Generate Configuration file
+  template:
+    src: myconfig.j2
+    dest: /etc/lighttpd/lighttpd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    server_port: 9090
+
+- name: Start lighttpd service
+  become: true
+  service:
+    name: lighttpd
+    state: started
